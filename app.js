@@ -79,7 +79,7 @@
 
             if (isSoundOn) {
                 soundIcon.textContent = '🔊';
-                soundLabel.textContent = 'Эмбиент вкл';
+                soundLabel.textContent = 'Звук';
                 ambientGain.gain.setTargetAtTime(0.06, now, 0.6);
                 playClickTone(520, 780);
             } else {
