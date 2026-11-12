@@ -10,7 +10,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     font-weight: 300;
-    background-color: #09090d;
+    background-color: #07070a;
     color: #ffffff;
     min-height: 100vh;
     display: flex;
@@ -20,6 +20,7 @@ body {
     position: relative;
 }
 
+/* Базовый контейнер фонов */
 .ambient-bg {
     position: fixed;
     top: 0;
@@ -29,9 +30,13 @@ body {
     z-index: -1;
     overflow: hidden;
     background: #07070a;
+    transition: background 1.2s ease;
 }
 
-.spotlight {
+/* ==========================================
+   РЕЖИМ 1: СТАРТОВЫЙ RGB-ПРОЖЕКТОР
+   ========================================== */
+.rgb-spotlight {
     position: absolute;
     width: 65vw;
     height: 65vw;
@@ -43,43 +48,176 @@ body {
     filter: blur(110px);
     opacity: 0.7;
     background: radial-gradient(circle, #ff0055 0%, rgba(255, 0, 85, 0) 70%);
+    transition: opacity 1.2s ease;
     animation: 
         moveSpotlight 18s infinite alternate ease-in-out,
         rgbCycle 12s infinite linear;
 }
 
+body.mode-quote .rgb-spotlight,
+body.mode-card .rgb-spotlight {
+    opacity: 0;
+}
+
 @keyframes moveSpotlight {
-    0% {
-        top: -15%;
-        left: -10%;
-        transform: scale(1);
-    }
-    33% {
-        top: 40%;
-        left: 55%;
-        transform: scale(1.2);
-    }
-    66% {
-        top: 55%;
-        left: -5%;
-        transform: scale(0.9);
-    }
-    100% {
-        top: -5%;
-        left: 45%;
-        transform: scale(1.1);
-    }
+    0% { top: -15%; left: -10%; transform: scale(1); }
+    33% { top: 40%; left: 55%; transform: scale(1.2); }
+    66% { top: 55%; left: -5%; transform: scale(0.9); }
+    100% { top: -5%; left: 45%; transform: scale(1.1); }
 }
 
 @keyframes rgbCycle {
+    0% { filter: blur(110px) hue-rotate(0deg); }
+    100% { filter: blur(110px) hue-rotate(360deg); }
+}
+
+/* ==========================================
+   РЕЖИМ 2: ЗВЕЗДНОЕ НЕБО (МОТИВАЦИЯ)
+   ========================================== */
+.stars-layer {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    background: radial-gradient(ellipse at bottom, #0d1528 0%, #05070e 100%);
+}
+
+body.mode-quote .stars-layer {
+    opacity: 1;
+}
+
+.stars-small,
+.stars-medium,
+.stars-large {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background-repeat: repeat;
+}
+
+/* Мелкие далекие звезды */
+.stars-small {
+    background-image: 
+        radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 80px 120px, rgba(255,255,255,0.8), rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 160px 60px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 230px 190px, rgba(255,255,255,0.7), rgba(0,0,0,0));
+    background-size: 250px 250px;
+    animation: starsDrift 90s linear infinite;
+}
+
+/* Средние звезды */
+.stars-medium {
+    background-image: 
+        radial-gradient(1.5px 1.5px at 50px 80px, #e0ebff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 190px 150px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 310px 40px, rgba(220,235,255,0.9), rgba(0,0,0,0));
+    background-size: 380px 380px;
+    animation: starsDrift 60s linear infinite, starsTwinkle 4s ease-in-out infinite alternate;
+}
+
+/* Яркие ближние звезды */
+.stars-large {
+    background-image: 
+        radial-gradient(2.5px 2.5px at 110px 210px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 410px 130px, #cfe2ff, rgba(0,0,0,0)),
+        radial-gradient(2.5px 2.5px at 280px 430px, #ffffff, rgba(0,0,0,0));
+    background-size: 520px 520px;
+    animation: starsDrift 40s linear infinite, starsTwinkle 3s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes starsDrift {
+    from { transform: translate(0, 0); }
+    to { transform: translate(-250px, -250px); }
+}
+
+@keyframes starsTwinkle {
+    0% { opacity: 0.55; }
+    100% { opacity: 1; }
+}
+
+/* ==========================================
+   РЕЖИМ 3: ИМИТАЦИЯ ОГНЯ ПРОЖЕКТОРА (КАРТЫ)
+   ========================================== */
+.fire-layer {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    background: radial-gradient(circle at 50% 100%, #1d0903 0%, #090403 100%);
+}
+
+body.mode-card .fire-layer {
+    opacity: 1;
+}
+
+.fire-glow-main {
+    position: absolute;
+    bottom: -15%;
+    left: 15%;
+    width: 70vw;
+    height: 70vw;
+    max-width: 850px;
+    max-height: 850px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 95, 15, 0.65) 0%, rgba(220, 35, 5, 0.25) 45%, rgba(0, 0, 0, 0) 72%);
+    filter: blur(85px);
+    animation: fireFlicker 3.5s infinite alternate ease-in-out;
+}
+
+.fire-glow-ember {
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    width: 55vw;
+    height: 55vw;
+    max-width: 650px;
+    max-height: 650px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 175, 30, 0.5) 0%, rgba(255, 65, 0, 0.15) 50%, rgba(0, 0, 0, 0) 75%);
+    filter: blur(95px);
+    animation: fireSway 6s infinite alternate ease-in-out;
+}
+
+@keyframes fireFlicker {
     0% {
-        filter: blur(110px) hue-rotate(0deg);
+        transform: translate(0, 0) scale(1);
+        opacity: 0.75;
+    }
+    35% {
+        transform: translate(-3%, -4%) scale(1.08);
+        opacity: 0.95;
+    }
+    70% {
+        transform: translate(2%, -2%) scale(0.96);
+        opacity: 0.8;
     }
     100% {
-        filter: blur(110px) hue-rotate(360deg);
+        transform: translate(-1%, -6%) scale(1.12);
+        opacity: 1;
     }
 }
 
+@keyframes fireSway {
+    0% {
+        transform: translate(0, 0) scale(0.95);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translate(-8%, 5%) scale(1.15);
+        opacity: 0.9;
+    }
+    100% {
+        transform: translate(5%, -5%) scale(1.05);
+        opacity: 0.7;
+    }
+}
+
+/* ==========================================
+   ИНТЕРФЕЙС КАРТОЧКИ И ТОНКИЕ ШРИФТЫ APPLE
+   ========================================== */
 .container {
     width: 100%;
     max-width: 720px;
@@ -88,7 +226,7 @@ body {
 }
 
 .glass-card {
-    background: rgba(24, 24, 30, 0.6);
+    background: rgba(20, 20, 26, 0.52);
     backdrop-filter: blur(28px) saturate(180%);
     -webkit-backdrop-filter: blur(28px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.14);
