@@ -1,3 +1,4 @@
+css
 * {
     box-sizing: border-box;
     margin: 0;
@@ -16,7 +17,6 @@ body {
     position: relative;
 }
 
-/* Фоновый контейнер для прожектора */
 .ambient-bg {
     position: fixed;
     top: 0;
@@ -28,7 +28,6 @@ body {
     background: #07070a;
 }
 
-/* Сам прожектор с RGB-переливанием и движением */
 .spotlight {
     position: absolute;
     width: 65vw;
@@ -46,7 +45,6 @@ body {
         rgbCycle 12s infinite linear;
 }
 
-/* Анимация плавного перемещения прожектора по экрану */
 @keyframes moveSpotlight {
     0% {
         top: -15%;
@@ -70,7 +68,6 @@ body {
     }
 }
 
-/* Смена цвета по RGB спектру */
 @keyframes rgbCycle {
     0% {
         filter: blur(110px) hue-rotate(0deg);
@@ -80,7 +77,6 @@ body {
     }
 }
 
-/* Центральная карточка */
 .container {
     width: 100%;
     max-width: 720px;
@@ -108,9 +104,9 @@ h1 {
     background: linear-gradient(135deg, #ffffff 0%, #b8c1ec 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    transition: font-size 0.3s ease, opacity 0.3s ease;
 }
 
-/* Область вывода цитат и карт */
 .output-box {
     margin: 30px 0;
     min-height: 120px;
@@ -132,7 +128,6 @@ h1 {
     color: #f4f4f6;
 }
 
-/* Оформление Карты дня */
 .tarot-card {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -157,7 +152,7 @@ h1 {
     border-radius: 8px;
     font-weight: 700;
     font-size: 0.9rem;
-    color: #fff;
+    color: #ffffff;
 }
 
 .tarot-name {
@@ -178,7 +173,6 @@ h1 {
     font-weight: 500;
 }
 
-/* Кнопки */
 .controls {
     display: flex;
     gap: 16px;
@@ -236,7 +230,6 @@ h1 {
     }
 }
 
-/* Адаптивность для телефонов */
 @media (max-width: 600px) {
     .glass-card {
         padding: 35px 20px;
