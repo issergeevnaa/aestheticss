@@ -143,14 +143,14 @@ XXI|Мир|Завершение, целостность, гармония|Зав
 const quotes = quotesRaw.split('|').map(item => item.trim()).filter(Boolean);
 
 const tarotCards = cardsRaw.trim().split('\n').map(line => {
-    const parts = line.split('|');
+    const [num = '', name = '', energy = '', advice = ''] = line.split('|');
     return {
-        num: parts ? parts.trim() : '',
-        name: parts ? parts.trim() : '',
-        energy: parts ? parts.trim() : '',
-        advice: parts ? parts.trim() : ''
+        num: num.trim(),
+        name: name.trim(),
+        energy: energy.trim(),
+        advice: advice.trim()
     };
-}).filter(card => card.name);
+}).filter(card => card.name !== '');
 
 const mainTitle = document.getElementById('main-title');
 const outputBox = document.getElementById('output-box');
@@ -162,85 +162,13 @@ let lastCardIndex = -1;
 
 function getRandomItem(array, lastIndex) {
     if (array.length === 0) return { item: null, index: -1 };
-    if (array.length === 1) return { item: array, index: 0 };
+    if (array.length === 1) return { item: array[0], index: 0 };
     
     let randomIndex;
     do {
         randomIndex = Math.floor(Math.random() * array.length);
     } while (randomIndex === lastIndex);
     return { item: array[randomIndex], index: randomIndex };
-}
-function triggerAnimation(element) {
-element.style.animation = 'none';
-void element.offsetWidth;
-element.style.animation = '';
-}
-function minimizeTitle() {
-mainTitle.style.fontSize = '1.5rem';
-mainTitle.style.opacity = '0.7';
-}
-function showQuote() {
-const result = getRandomItem(quotes, lastQuoteIndex);
-if (!result.item) return;
-// Включаем фон звездного неба
-document.body.classList.remove('mode-card');
-document.body.classList.add('mode-quote');
-lastQuoteIndex = result.index;
-minimizeTitle();
-outputBox.textContent = '';
-const p = document.createElement('p');
-p.className = 'quote-text';
-p.textContent = '«' + result.item + '»';
-outputBox.appendChild(p);
-outputBox.classList.remove('hidden');
-triggerAnimation(outputBox);
-}
-function showCard() {
-const result = getRandomItem(tarotCards, lastCardIndex);
-if (!result.item) return;
-// Включаем фон огненного прожектора
-document.body.classList.remove('mode-quote');
-document.body.classList.add('mode-card');
-lastCardIndex = result.index;
-const card = result.item;
-minimizeTitle();
-outputBox.textContent = '';
-const cardDiv = document.createElement('div');
-cardDiv.className = 'tarot-card';
-const headerDiv = document.createElement('div');
-headerDiv.className = 'tarot-header';
-const numSpan = document.createElement('span');
-numSpan.className = 'tarot-num';
-numSpan.textContent = card.num;
-const nameSpan = document.createElement('span');
-nameSpan.className = 'tarot-name';
-nameSpan.textContent = card.name;
-headerDiv.appendChild(numSpan);
-headerDiv.appendChild(nameSpan);
-const energyP = document.createElement('p');
-energyP.className = 'tarot-detail';
-const energyStrong = document.createElement('strong');
-energyStrong.textContent = 'Энергия дня: ';
-energyP.appendChild(energyStrong);
-energyP.appendChild(document.createTextNode(card.energy));
-const adviceP = document.createElement('p');
-adviceP.className = 'tarot-detail';
-const adviceStrong = document.createElement('strong');
-adviceStrong.textContent = 'Совет дня: ';
-adviceP.appendChild(adviceStrong);
-adviceP.appendChild(document.createTextNode(card.advice));
-cardDiv.appendChild(headerDiv);
-cardDiv.appendChild(energyP);
-cardDiv.appendChild(adviceP);
-outputBox.appendChild(cardDiv);
-outputBox.classList.remove('hidden');
-triggerAnimation(outputBox);
-}
-quoteBtn.addEventListener('click', showQuote);
-cardBtn.addEventListener('click', showCard);
-randomIndex = Math.floor(Math.random() * array.length);
-} while (randomIndex === lastIndex);
-return { item: array[randomIndex], index: randomIndex };
 }
 function triggerAnimation(element) {
 element.style.animation = 'none';
