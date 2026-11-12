@@ -4,14 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Motivation</title>
-    <link rel="stylesheet" href="./style.css?v=5">
+    <link rel="stylesheet" href="./style.css?v=6">
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="ambient-bg">
-        <div class="spotlight"></div>
+        <!-- 1. Стартовый RGB-прожектор -->
+        <div class="spotlight rgb-spotlight"></div>
+
+        <!-- 2. Звездное небо (для мотивации) -->
+        <div class="stars-layer">
+            <div class="stars-small"></div>
+            <div class="stars-medium"></div>
+            <div class="stars-large"></div>
+        </div>
+
+        <!-- 3. Имитация огня прожектора (для карт) -->
+        <div class="fire-layer">
+            <div class="fire-glow-main"></div>
+            <div class="fire-glow-ember"></div>
+        </div>
     </div>
 
     <main class="container">
@@ -25,6 +39,6 @@
         </div>
     </main>
 
-    <script src="./app.js?v=5" charset="UTF-8"></script>
+    <script src="./app.js?v=6" charset="UTF-8"></script>
 </body>
 </html>
