@@ -4,24 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Motivation</title>
-    <link rel="stylesheet" href="./style.css?v=6">
+    <link rel="stylesheet" href="./style.css?v=10">
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
+    <button type="button" id="sound-toggle" class="sound-btn" aria-label="Звук">
+        <span id="sound-icon">🔇</span>
+        <span id="sound-label">Звук выкл</span>
+    </button>
+
     <div class="ambient-bg">
-        <!-- 1. Стартовый RGB-прожектор -->
         <div class="spotlight rgb-spotlight"></div>
 
-        <!-- 2. Звездное небо (для мотивации) -->
         <div class="stars-layer">
             <div class="stars-small"></div>
             <div class="stars-medium"></div>
             <div class="stars-large"></div>
         </div>
 
-        <!-- 3. Имитация огня прожектора (для карт) -->
         <div class="fire-layer">
             <div class="fire-glow-main"></div>
             <div class="fire-glow-ember"></div>
@@ -30,7 +32,7 @@
 
     <main class="container">
         <div class="glass-card">
-            <h1 id="main-title">Выберите, что Вам сейчас ближе</h1>
+            <h1 id="main-title">Что Вам сейчас ближе</h1>
             <div id="output-box" class="output-box hidden"></div>
             <div class="controls">
                 <button type="button" id="quote-btn" class="btn primary-btn">Мотивация</button>
@@ -39,6 +41,6 @@
         </div>
     </main>
 
-    <script src="./app.js?v=6" charset="UTF-8"></script>
+    <script src="./app.js?v=10" charset="UTF-8"></script>
 </body>
 </html>
