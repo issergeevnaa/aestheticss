@@ -1,5 +1,3 @@
-'use strict';
-
 const quotes = [
     "Каждый день — это шанс стать лучше, чем ты был вчера.",
     "Ты не обязан быть идеальным — ты обязан просто начать.",
@@ -130,7 +128,8 @@ const tarotCards = [
     { num: "Жезлы", name: "Двойка Жезлов", energy: "Планирование, выбор пути, перспектива", advice: "Оцените свои возможности и наметьте следующий шаг" },
     { num: "Жезлы", name: "Тройка Жезлов", energy: "Расширение, первые плоды, ожидание", advice: "Смотрите шире, ваши усилия скоро принесут результат" },
     { num: "Жезлы", name: "Четвёрка Жезлов", energy: "Стабильность, праздник, гармония", advice: "Отметьте промежуточный успех и поблагодарите близких" },
-    { num: "Жезлы", name: "Пятёрка Жезлов", energy: "Конкуренция, спор, азарт", advice: "Не бойтесь здоровой борьбы, отстаивайте свою позицию" },{ num: "Жезлы", name: "Шестёрка Жезлов", energy: "Триумф, признание, победа", advice: "Примите заслуженную похвалу и двигайтесь к новой цели" },
+    { num: "Жезлы", name: "Пятёрка Жезлов", energy: "Конкуренция, спор, азарт", advice: "Не бойтесь здоровой борьбы, отстаивайте свою позицию" },
+    { num: "Жезлы", name: "Шестёрка Жезлов", energy: "Триумф, признание, победа", advice: "Примите заслуженную похвалу и двигайтесь к новой цели" },
 { num: "Жезлы", name: "Семёрка Жезлов", energy: "Защита границ, стойкость, вызов", advice: "Не отступайте под давлением, правда на вашей стороне" },
 { num: "Жезлы", name: "Восьмёрка Жезлов", energy: "Скорость, новости, стремительность", advice: "Действуйте быстро, события набирают обороты" },
 { num: "Жезлы", name: "Девятка Жезлов", energy: "Осторожность, опыт, последний рывок", advice: "Соберите силы: до финиша осталось совсем немного" },
@@ -162,10 +161,10 @@ randomIndex = Math.floor(Math.random() * quotes.length);
 } while (randomIndex === lastQuoteIndex && quotes.length > 1);
 lastQuoteIndex = randomIndex;
 minimizeTitle();
-outputBox.replaceChildren();
+outputBox.textContent = '';
 const p = document.createElement('p');
 p.className = 'quote-text';
-p.textContent = «${quotes[randomIndex]}»;
+p.textContent = '«' + quotes[randomIndex] + '»';
 outputBox.appendChild(p);
 outputBox.classList.remove('hidden');
 triggerAnimation(outputBox);
@@ -178,7 +177,7 @@ randomIndex = Math.floor(Math.random() * tarotCards.length);
 lastCardIndex = randomIndex;
 const card = tarotCards[randomIndex];
 minimizeTitle();
-outputBox.replaceChildren();
+outputBox.textContent = '';
 const cardDiv = document.createElement('div');
 cardDiv.className = 'tarot-card';
 const headerDiv = document.createElement('div');
