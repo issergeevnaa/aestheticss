@@ -140,7 +140,9 @@ XXI|Мир|Завершение, целостность, гармония|Зав
 Жезлы|Король Жезлов|Лидерство, масштаб, стратегия|Берите инициативу в свои руки и ведите за собой
 `;
 
+// Формируем массивы из строк
 const quotes = quotesRaw.split('|').map(item => item.trim()).filter(Boolean);
+
 const tarotCards = cardsRaw.trim().split('\n').map(line => {
     const parts = line.split('|');
     return {
@@ -159,38 +161,43 @@ const cardBtn = document.getElementById('card-btn');
 let lastQuoteIndex = -1;
 let lastCardIndex = -1;
 
-function triggerAnimation(element) {
-    element.style.animation = 'none';
-    void element.offsetWidth;
-    element.style.animation = '';
-}
-
-function minimizeTitle() {
-    mainTitle.style.fontSize = '1.5rem';
-    mainTitle.style.opacity = '0.7';
-}
-
-function showQuote() {
+// Универсальная функция случайного выбора без повторения предыдущего элемента
+function getRandomItem(array, lastIndex) {
+    if (array.length === 0) return { item: null, index: -1 };
+    if (array.length === 1) return { item: array[0], index: 0 };
     let randomIndex;
-    do {randomIndex = Math.floor(Math.random() * quotes.length);
-} while (randomIndex === lastQuoteIndex && quotes.length > 1);
-lastQuoteIndex = randomIndex;
+do {
+randomIndex = Math.floor(Math.random() * array.length);
+} while (randomIndex === lastIndex);
+return { item: array[randomIndex], index: randomIndex };
+}
+function triggerAnimation(element) {
+element.style.animation = 'none';
+void element.offsetWidth;
+element.style.animation = '';
+}
+function minimizeTitle() {
+mainTitle.style.fontSize = '1.5rem';
+mainTitle.style.opacity = '0.7';
+}
+function showQuote() {
+const result = getRandomItem(quotes, lastQuoteIndex);
+if (!result.item) return;
+lastQuoteIndex = result.index;
 minimizeTitle();
 outputBox.textContent = '';
 const p = document.createElement('p');
 p.className = 'quote-text';
-p.textContent = '«' + quotes[randomIndex] + '»';
+p.textContent = '«' + result.item + '»';
 outputBox.appendChild(p);
 outputBox.classList.remove('hidden');
 triggerAnimation(outputBox);
 }
 function showCard() {
-let randomIndex;
-do {
-randomIndex = Math.floor(Math.random() * tarotCards.length);
-} while (randomIndex === lastCardIndex && tarotCards.length > 1);
-lastCardIndex = randomIndex;
-const card = tarotCards[randomIndex];
+const result = getRandomItem(tarotCards, lastCardIndex);
+if (!result.item) return;
+lastCardIndex = result.index;
+const card = result.item;
 minimizeTitle();
 outputBox.textContent = '';
 const cardDiv = document.createElement('div');
