@@ -236,3 +236,93 @@ triggerAnimation(outputBox);
 }
 quoteBtn.addEventListener('click', showQuote);
 cardBtn.addEventListener('click', showCard);
+{ num: "Жезлы", name: "Двойка Жезлов", energy: "Планирование, выбор пути, перспектива", advice: "Оцените свои возможности и наметьте следующий шаг" },
+{ num: "Жезлы", name: "Тройка Жезлов", energy: "Расширение, первые плоды, ожидание", advice: "Смотрите шире, ваши усилия скоро принесут результат" },
+{ num: "Жезлы", name: "Четвёрка Жезлов", energy: "Стабильность, праздник, гармония", advice: "Отметьте промежуточный успех и поблагодарите близких" },
+{ num: "Жезлы", name: "Пятёрка Жезлов", energy: "Конкуренция, спор, азарт", advice: "Не бойтесь здоровой борьбы, отстаивайте свою позицию" },
+{ num: "Жезлы", name: "Шестёрка Жезлов", energy: "Триумф, признание, победа", advice: "Примите заслуженную похвалу и двигайтесь к новой цели" },
+{ num: "Жезлы", name: "Семёрка Жезлов", energy: "Защита границ, стойкость, вызов", advice: "Не отступайте под давлением, правда на вашей стороне" },
+{ num: "Жезлы", name: "Восьмёрка Жезлов", energy: "Скорость, новости, стремительность", advice: "Действуйте быстро, события набирают обороты" },
+{ num: "Жезлы", name: "Девятка Жезлов", energy: "Осторожность, опыт, последний рывок", advice: "Соберите силы: до финиша осталось совсем немного" },
+{ num: "Жезлы", name: "Десятка Жезлов", energy: "Нагрузка, ответственность, усталость", advice: "Не берите на себя лишнего, делегируйте часть задач" },
+{ num: "Жезлы", name: "Паж Жезлов", energy: "Энтузиазм, любопытство, весть", advice: "Пробуйте новое и не бойтесь экспериментировать" },
+{ num: "Жезлы", name: "Рыцарь Жезлов", energy: "Страсть, рывок, смелость", advice: "Врывайтесь в задачи с огнём, но не забывайте о деталях" },
+{ num: "Жезлы", name: "Королева Жезлов", energy: "Харизма, уверенность, тепло", advice: "Будьте в центре внимания, заряжайте окружающих энергией" },
+{ num: "Жезлы", name: "Король Жезлов", energy: "Лидерство, масштаб, стратегия", advice: "Берите инициативу в свои руки и ведите за собой" }
+];
+var mainTitle = document.getElementById('main-title');
+var outputBox = document.getElementById('output-box');
+var quoteBtn = document.getElementById('quote-btn');
+var cardBtn = document.getElementById('card-btn');
+var lastQuoteIndex = -1;
+var lastCardIndex = -1;
+function triggerAnimation(element) {
+element.style.animation = 'none';
+void element.offsetWidth;
+element.style.animation = '';
+}
+function minimizeTitle() {
+mainTitle.style.fontSize = '1.5rem';
+mainTitle.style.opacity = '0.7';
+}
+quoteBtn.addEventListener('click', function() {
+var randomIndex;
+do {
+randomIndex = Math.floor(Math.random() * quotes.length);
+} while (randomIndex === lastQuoteIndex && quotes.length > 1);
+lastQuoteIndex = randomIndex;
+var selectedQuote = quotes.at(randomIndex);
+document.body.classList.remove('mode-card');
+document.body.classList.add('mode-quote');
+minimizeTitle();
+outputBox.textContent = '';
+var p = document.createElement('p');
+p.className = 'quote-text';
+p.textContent = '«' + selectedQuote + '»';
+outputBox.appendChild(p);
+outputBox.classList.remove('hidden');
+triggerAnimation(outputBox);
+});
+cardBtn.addEventListener('click', function() {
+var randomIndex;
+do {
+randomIndex = Math.floor(Math.random() * tarotCards.length);
+} while (randomIndex === lastCardIndex && tarotCards.length > 1);
+lastCardIndex = randomIndex;
+var card = tarotCards.at(randomIndex);
+document.body.classList.remove('mode-quote');
+document.body.classList.add('mode-card');
+minimizeTitle();
+outputBox.textContent = '';
+var cardDiv = document.createElement('div');
+cardDiv.className = 'tarot-card';
+var headerDiv = document.createElement('div');
+headerDiv.className = 'tarot-header';
+var numSpan = document.createElement('span');
+numSpan.className = 'tarot-num';
+numSpan.textContent = card.num;
+var nameSpan = document.createElement('span');
+nameSpan.className = 'tarot-name';
+nameSpan.textContent = card.name;
+headerDiv.appendChild(numSpan);
+headerDiv.appendChild(nameSpan);
+var energyP = document.createElement('p');
+energyP.className = 'tarot-detail';
+var energyStrong = document.createElement('strong');
+energyStrong.textContent = 'Энергия дня: ';
+energyP.appendChild(energyStrong);
+energyP.appendChild(document.createTextNode(card.energy));
+var adviceP = document.createElement('p');
+adviceP.className = 'tarot-detail';
+var adviceStrong = document.createElement('strong');
+adviceStrong.textContent = 'Совет дня: ';
+adviceP.appendChild(adviceStrong);
+adviceP.appendChild(document.createTextNode(card.advice));
+cardDiv.appendChild(headerDiv);
+cardDiv.appendChild(energyP);
+cardDiv.appendChild(adviceP);
+outputBox.appendChild(cardDiv);
+outputBox.classList.remove('hidden');
+triggerAnimation(outputBox);
+});
+});
