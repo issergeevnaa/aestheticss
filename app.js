@@ -140,16 +140,15 @@ XXI|Мир|Завершение, целостность, гармония|Зав
 Жезлы|Король Жезлов|Лидерство, масштаб, стратегия|Берите инициативу в свои руки и ведите за собой
 `;
 
-// Формируем массивы из строк
 const quotes = quotesRaw.split('|').map(item => item.trim()).filter(Boolean);
 
 const tarotCards = cardsRaw.trim().split('\n').map(line => {
     const parts = line.split('|');
     return {
-        num: parts[0] ? parts[0].trim() : '',
-        name: parts[1] ? parts[1].trim() : '',
-        energy: parts[2] ? parts[2].trim() : '',
-        advice: parts[3] ? parts[3].trim() : ''
+        num: parts ? parts.trim() : '',
+        name: parts ? parts.trim() : '',
+        energy: parts ? parts.trim() : '',
+        advice: parts ? parts.trim() : ''
     };
 }).filter(card => card.name);
 
@@ -161,15 +160,15 @@ const cardBtn = document.getElementById('card-btn');
 let lastQuoteIndex = -1;
 let lastCardIndex = -1;
 
-// Универсальная функция случайного выбора без повторения предыдущего элемента
 function getRandomItem(array, lastIndex) {
     if (array.length === 0) return { item: null, index: -1 };
-    if (array.length === 1) return { item: array[0], index: 0 };
+    if (array.length === 1) return { item: array, index: 0 };
+    
     let randomIndex;
-do {
-randomIndex = Math.floor(Math.random() * array.length);
-} while (randomIndex === lastIndex);
-return { item: array[randomIndex], index: randomIndex };
+    do {
+        randomIndex = Math.floor(Math.random() * array.length);
+    } while (randomIndex === lastIndex);
+    return { item: array[randomIndex], index: randomIndex };
 }
 function triggerAnimation(element) {
 element.style.animation = 'none';
@@ -183,6 +182,9 @@ mainTitle.style.opacity = '0.7';
 function showQuote() {
 const result = getRandomItem(quotes, lastQuoteIndex);
 if (!result.item) return;
+// Включаем фон звездного неба
+document.body.classList.remove('mode-card');
+document.body.classList.add('mode-quote');
 lastQuoteIndex = result.index;
 minimizeTitle();
 outputBox.textContent = '';
@@ -196,6 +198,9 @@ triggerAnimation(outputBox);
 function showCard() {
 const result = getRandomItem(tarotCards, lastCardIndex);
 if (!result.item) return;
+// Включаем фон огненного прожектора
+document.body.classList.remove('mode-quote');
+document.body.classList.add('mode-card');
 lastCardIndex = result.index;
 const card = result.item;
 minimizeTitle();
